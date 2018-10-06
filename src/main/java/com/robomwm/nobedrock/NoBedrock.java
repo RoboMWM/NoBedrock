@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,11 +25,18 @@ public class NoBedrock extends JavaPlugin implements Listener
         dataStore = griefPrevention.dataStore;
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     private void onBlockPlace(BlockPlaceEvent event)
     {
         boolean cancel = event.getBlock().getType().equals(Material.BEDROCK) && dataStore.getClaimAt(event.getBlock().getLocation(), true, null) != null;
         event.setCancelled(cancel);
         event.setBuild(!cancel);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onBlockBuild(BlockCanBuildEvent event)
+    {
+        boolean cancel = event.getBlock().getType().equals(Material.BEDROCK) && dataStore.getClaimAt(event.getBlock().getLocation(), true, null) != null;
+        event.setBuildable(!cancel);
     }
 }
