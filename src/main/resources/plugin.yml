@@ -1,0 +1,6 @@
+name: NoBedrock
+main: com.robomwm.nobedrock.NoBedrock
+depend: [GriefPrevention]
+version: ${project.version}
+author: RoboMWM
+website: https://github.com/robomwm
