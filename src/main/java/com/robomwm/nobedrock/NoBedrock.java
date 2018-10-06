@@ -4,6 +4,7 @@ import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,9 +24,11 @@ public class NoBedrock extends JavaPlugin implements Listener
         dataStore = griefPrevention.dataStore;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     private void onBlockPlace(BlockPlaceEvent event)
     {
-        event.setCancelled(event.getBlock().getType().equals(Material.BEDROCK) && dataStore.getClaimAt(event.getBlock().getLocation(), true, null) != null);
+        boolean cancel = event.getBlock().getType().equals(Material.BEDROCK) && dataStore.getClaimAt(event.getBlock().getLocation(), true, null) != null;
+        event.setCancelled(cancel);
+        event.setBuild(!cancel);
     }
 }

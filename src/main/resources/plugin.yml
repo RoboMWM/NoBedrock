@@ -1,6 +1,7 @@
 name: NoBedrock
 main: com.robomwm.nobedrock.NoBedrock
 depend: [GriefPrevention]
+loadbefore: [ProtectionStones]
 version: ${project.version}
 author: RoboMWM
 website: https://github.com/robomwm
